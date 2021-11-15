@@ -1,0 +1,11 @@
+C:\Work\NPoker\NPokerServer\ServerModule\bin\Release\net5.0\ServerModule.deps.json
+C:\Work\NPoker\NPokerServer\ServerModule\bin\Release\net5.0\ServerModule.dll
+C:\Work\NPoker\NPokerServer\ServerModule\bin\Release\net5.0\ref\ServerModule.dll
+C:\Work\NPoker\NPokerServer\ServerModule\bin\Release\net5.0\ServerModule.pdb
+C:\Work\NPoker\NPokerServer\ServerModule\obj\Release\net5.0\ServerModule.GeneratedMSBuildEditorConfig.editorconfig
+C:\Work\NPoker\NPokerServer\ServerModule\obj\Release\net5.0\ServerModule.AssemblyInfoInputs.cache
+C:\Work\NPoker\NPokerServer\ServerModule\obj\Release\net5.0\ServerModule.AssemblyInfo.cs
+C:\Work\NPoker\NPokerServer\ServerModule\obj\Release\net5.0\ServerModule.csproj.CoreCompileInputs.cache
+C:\Work\NPoker\NPokerServer\ServerModule\obj\Release\net5.0\ServerModule.dll
+C:\Work\NPoker\NPokerServer\ServerModule\obj\Release\net5.0\ref\ServerModule.dll
+C:\Work\NPoker\NPokerServer\ServerModule\obj\Release\net5.0\ServerModule.pdb
