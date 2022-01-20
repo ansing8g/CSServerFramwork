@@ -15,7 +15,7 @@ namespace ServerModule.Database
             m_string_builder = new MySqlConnectionStringBuilder();
             m_event = _event;
             m_use_pooling = false;
-            m_connection_pool = null;
+            m_connection_pool = new List<MySqlConnection>();
         }
 
         public bool Initialize(string _ip, uint _port, string _dbname, string _id, string _pw, bool _use_pooling, int _pool_count, int _get_connector_timeout_millisecond)
@@ -38,9 +38,9 @@ namespace ServerModule.Database
                     return true;
                 }
 
-                m_connection_pool = new List<MySqlConnection>();
+                m_connection_pool.Clear();
                 m_connection_pool.Capacity = _pool_count;
-                
+
                 for (int i = 0; i < _pool_count; ++i)
                 {
                     MySqlConnection connection = new MySqlConnection(m_string_builder.ConnectionString);
@@ -84,7 +84,7 @@ namespace ServerModule.Database
             return new MySqlExecutor(this);
         }
 
-        private bool PopConnection(out MySqlConnection _connection)
+        private bool PopConnection(out MySqlConnection? _connection)
         {
             _connection = null;
 
@@ -94,7 +94,7 @@ namespace ServerModule.Database
                 {
                     _connection = new MySqlConnection(m_string_builder.ConnectionString);
                     _connection.Open();
-                    if(ConnectionState.Open != _connection.State)
+                    if (ConnectionState.Open != _connection.State)
                     {
                         return false;
                     }
@@ -105,14 +105,14 @@ namespace ServerModule.Database
 
                     try
                     {
-                        if(false == Monitor.TryEnter(m_connection_pool, m_get_connector_timeout_millisecond))
+                        if (false == Monitor.TryEnter(m_connection_pool, m_get_connector_timeout_millisecond))
                         {
                             return false;
                         }
-                        
-                        while(0 >= m_connection_pool.Count)
+
+                        while (0 >= m_connection_pool.Count)
                         {
-                            if(DateTime.Now < start.AddMilliseconds(m_get_connector_timeout_millisecond))
+                            if (DateTime.Now < start.AddMilliseconds(m_get_connector_timeout_millisecond))
                             {
                                 Monitor.Exit(m_connection_pool);
                                 return false;
@@ -149,9 +149,9 @@ namespace ServerModule.Database
                     }
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                if(null != m_event)
+                if (null != m_event)
                 {
                     m_event.OnError("MySqlManager.PopConnection", e);
                 }
@@ -178,7 +178,7 @@ namespace ServerModule.Database
                     }
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 if (null != m_event)
                 {
@@ -202,7 +202,7 @@ namespace ServerModule.Database
             get
             {
                 return m_event;
-            }           
+            }
         }
 
         private MySqlConnectionStringBuilder m_string_builder;

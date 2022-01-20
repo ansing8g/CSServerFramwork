@@ -70,7 +70,7 @@ namespace ServerModule.Network
 
         private void AcceptCallback(IAsyncResult ar)
         {
-            Socket socket = null;
+            Socket? socket = null;
             try
             {
                 if (null == m_acceptsocket)
@@ -95,10 +95,10 @@ namespace ServerModule.Network
             }
             finally
             {
-                m_acceptsocket.BeginAccept(AcceptCallback, null);
+                m_acceptsocket!.BeginAccept(AcceptCallback, null);
             }
 
-            SessionSocket sessionsocket = null;
+            SessionSocket? sessionsocket = null;
             try
             {
                 sessionsocket = new SessionSocket(socket, m_event, m_bufsize, m_total_bufsize);
@@ -127,7 +127,7 @@ namespace ServerModule.Network
             }
         }
 
-        private Socket m_acceptsocket;
+        private Socket? m_acceptsocket;
         private ServerSocketEvent m_event;
         private int m_port;
         private int m_listen_count;

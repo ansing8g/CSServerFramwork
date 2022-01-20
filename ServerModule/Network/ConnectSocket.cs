@@ -11,9 +11,9 @@ namespace ServerModule.Network
         {
             m_event = _event;
             m_socket = null;
-            m_buf = null;
+            m_buf = new byte[0];
             m_bufsize = 0;
-            m_total_buf = null;
+            m_total_buf = new byte[0];
             m_total_bufsize = 0;
             m_offset = 0;
 
@@ -70,7 +70,7 @@ namespace ServerModule.Network
                     m_event.OnConnect(this);
                 }
 
-                if(false == Receive())
+                if (false == Receive())
                 {
                     Disconnect();
                 }
@@ -95,7 +95,7 @@ namespace ServerModule.Network
         {
             try
             {
-                if (true == _check_connect && 
+                if (true == _check_connect &&
                     null == m_socket)
                 {
                     return;
@@ -143,7 +143,7 @@ namespace ServerModule.Network
                 //int sendsize = m_socket.Send(total_data, 0, total_data.Length, SocketFlags.None, out error);
 
                 SocketError error;
-                m_socket.BeginSend(total_data, 0, total_data.Length, SocketFlags.None, out error, SendCallback, this);
+                m_socket!.BeginSend(total_data, 0, total_data.Length, SocketFlags.None, out error, SendCallback, this);
 
                 if (SocketError.Success != error &&
                     SocketError.IOPending != error)
@@ -199,7 +199,7 @@ namespace ServerModule.Network
                 }
 
                 SocketError error;
-                m_socket.BeginReceive(m_buf, 0, m_buf.Length, SocketFlags.None, out error, ReceiveCallback, this);
+                m_socket!.BeginReceive(m_buf, 0, m_buf.Length, SocketFlags.None, out error, ReceiveCallback, this);
 
                 if (SocketError.Success != error &&
                     SocketError.IOPending != error)
@@ -224,7 +224,7 @@ namespace ServerModule.Network
         {
             try
             {
-                int recvsize = m_socket.EndReceive(ar);
+                int recvsize = m_socket!.EndReceive(ar);
 
                 if (0 >= recvsize)
                 {
@@ -302,13 +302,13 @@ namespace ServerModule.Network
         }
 
         private ClientSocketEvent m_event;
-        private Socket m_socket;
+        private Socket? m_socket;
         private byte[] m_buf;
         private uint m_bufsize;
         private byte[] m_total_buf;
         private uint m_total_bufsize;
         private uint m_offset;
 
-        public object StateObject;
+        public object? StateObject;
     }
 }

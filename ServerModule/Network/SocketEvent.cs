@@ -12,21 +12,21 @@ namespace ServerModule.Network
 
     public interface ServerSocketEvent
     {
-        void OnError(SocketErrorType _error_type, System.Exception _exception, SessionSocket _sessionsocket);
+        public void OnError(SocketErrorType _error_type, System.Exception _exception, SessionSocket? _sessionsocket);
 
-        void OnAccept(SessionSocket _sessionsocket);
-        void OnDisconnect(SessionSocket _sessionsocket);
-        void OnSend(SessionSocket _sessionsocket);
-        void OnReceive(SessionSocket _sessionsocket, byte[] _data);
+        public void OnAccept(SessionSocket _sessionsocket);
+        public void OnDisconnect(SessionSocket _sessionsocket);
+        public void OnSend(SessionSocket _sessionsocket);
+        public void OnReceive(SessionSocket _sessionsocket, byte[] _data);
     }
 
     public interface ClientSocketEvent
     {
-        void OnError(SocketErrorType _error_type, System.Exception _exception, ConnectSocket _connectsocket);
+        public void OnError(SocketErrorType _error_type, System.Exception _exception, ConnectSocket? _connectsocket);
 
-        void OnConnect(ConnectSocket _connectsocket);
-        void OnDisconnect(ConnectSocket _connectsocket);
-        void OnSend(ConnectSocket _connectsocket);
-        void OnReceive(ConnectSocket _connectsocket, byte[] _data);
+        public void OnConnect(ConnectSocket _connectsocket);
+        public void OnDisconnect(ConnectSocket _connectsocket);
+        public void OnSend(ConnectSocket _connectsocket);
+        public void OnReceive(ConnectSocket _connectsocket, byte[] _data);
     }
 }

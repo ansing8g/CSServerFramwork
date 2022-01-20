@@ -10,25 +10,28 @@ namespace ServerModule.Database
         public void AddInputParameter(string _name, MySqlDbType _type, object _value);
         public void AddOutputParameter(string _name, MySqlDbType _type);
         public bool Execute(string _procedure_name, Action<MySqlParameterCollection> _func_result);
-        public bool Execute(string _procedure_name, Action<MySqlParameterCollection> _func_result, object _object_next, Action<object> _func_next);
+        public bool Execute(string _procedure_name, Action<MySqlParameterCollection> _func_result, object _object_next, Action<object?> _func_next);
         public bool Execute(string _procedure_name, Action<MySqlDataReader> _func_reader, Action<MySqlParameterCollection> _func_result);
-        public bool Execute(string _procedure_name, Action<MySqlDataReader> _func_reader, Action<MySqlParameterCollection> _func_result, object _object_next, Action<object> _func_next);
+        public bool Execute(string _procedure_name, Action<MySqlDataReader> _func_reader, Action<MySqlParameterCollection> _func_result, object _object_next, Action<object?> _func_next);
         public bool ExecuteAsync(string _procedure_name, Action<MySqlParameterCollection> _func_result);
-        public bool ExecuteAsync(string _procedure_name, Action<MySqlParameterCollection> _func_result, object _object_next, Action<object> _func_next);
+        public bool ExecuteAsync(string _procedure_name, Action<MySqlParameterCollection> _func_result, object _object_next, Action<object?> _func_next);
         public bool ExecuteAsync(string _procedure_name, Action<MySqlDataReader> _func_reader, Action<MySqlParameterCollection> _func_result);
-        public bool ExecuteAsync(string _procedure_name, Action<MySqlDataReader> _func_reader, Action<MySqlParameterCollection> _func_result, object _object_next, Action<object> _func_next);
+        public bool ExecuteAsync(string _procedure_name, Action<MySqlDataReader> _func_reader, Action<MySqlParameterCollection> _func_result, object _object_next, Action<object?> _func_next);
     }
 
     public partial class MySqlManager
     {
-        internal class MySqlExecutor : IMySqlExecutor
+        public class MySqlExecutor : IMySqlExecutor
         {
-            public MySqlExecutor(MySqlManager _manager)
+            internal MySqlExecutor(MySqlManager _manager)
             {
-                m_manager = _manager;
                 m_command = new MySqlCommand();
+                m_manager = _manager;
+                m_procedure_name = "";
+                m_func_reader = null;
                 m_func_result = null;
                 m_object_next = null;
+                m_func_next = null;
             }
 
             public void AddInputParameter(string _name, MySqlDbType _type, object _value)
@@ -42,9 +45,9 @@ namespace ServerModule.Database
                         Value = _value
                     });
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    if(null != m_manager &&
+                    if (null != m_manager &&
                         null != m_manager.m_event)
                     {
                         m_manager.m_event.OnError("IMySqlExecutor.AddInputParameter", this, e);
@@ -63,9 +66,9 @@ namespace ServerModule.Database
                         Direction = ParameterDirection.Output
                     });
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    if(null != m_manager &&
+                    if (null != m_manager &&
                         null != m_manager.m_event)
                     {
                         m_manager.m_event.OnError("IMySqlExecutor.AddOutputParameter", this, e);
@@ -84,7 +87,7 @@ namespace ServerModule.Database
                 return Execute();
             }
 
-            public bool Execute(string _procedure_name, Action<MySqlParameterCollection> _func_result, object _object_next, Action<object> _func_next)
+            public bool Execute(string _procedure_name, Action<MySqlParameterCollection> _func_result, object _object_next, Action<object?> _func_next)
             {
                 m_procedure_name = _procedure_name;
                 m_func_reader = null;
@@ -106,7 +109,7 @@ namespace ServerModule.Database
                 return Execute();
             }
 
-            public bool Execute(string _procedure_name, Action<MySqlDataReader> _func_reader, Action<MySqlParameterCollection> _func_result, object _object_next, Action<object> _func_next)
+            public bool Execute(string _procedure_name, Action<MySqlDataReader> _func_reader, Action<MySqlParameterCollection> _func_result, object _object_next, Action<object?> _func_next)
             {
                 m_procedure_name = _procedure_name;
                 m_func_reader = _func_reader;
@@ -135,7 +138,7 @@ namespace ServerModule.Database
                 return m_manager.AddAsyncExecute(executor);
             }
 
-            public bool ExecuteAsync(string _procedure_name, Action<MySqlParameterCollection> _func_result, object _object_next, Action<object> _func_next)
+            public bool ExecuteAsync(string _procedure_name, Action<MySqlParameterCollection> _func_result, object _object_next, Action<object?> _func_next)
             {
                 MySqlExecutor executor = new MySqlExecutor(m_manager);
                 executor.m_procedure_name = _procedure_name;
@@ -171,7 +174,7 @@ namespace ServerModule.Database
                 return m_manager.AddAsyncExecute(executor);
             }
 
-            public bool ExecuteAsync(string _procedure_name, Action<MySqlDataReader> _func_reader, Action<MySqlParameterCollection> _func_result, object _object_next, Action<object> _func_next)
+            public bool ExecuteAsync(string _procedure_name, Action<MySqlDataReader> _func_reader, Action<MySqlParameterCollection> _func_result, object _object_next, Action<object?> _func_next)
             {
                 MySqlExecutor executor = new MySqlExecutor(m_manager);
                 executor.m_procedure_name = _procedure_name;
@@ -193,7 +196,7 @@ namespace ServerModule.Database
             {
                 try
                 {
-                    MySqlConnection connection = null;
+                    MySqlConnection? connection = null;
                     if (false == m_manager.PopConnection(out connection))
                     {
                         throw new Exception("Get Connector Fail");
@@ -219,9 +222,9 @@ namespace ServerModule.Database
 
                     m_command.Parameters.Clear();
 
-                    m_manager.PushConnection(connection);
+                    m_manager.PushConnection(connection!);
 
-                    if(null != m_func_next)
+                    if (null != m_func_next)
                     {
                         m_func_next(m_object_next);
                     }
@@ -243,10 +246,10 @@ namespace ServerModule.Database
             private MySqlCommand m_command;
             private MySqlManager m_manager;
             public string m_procedure_name;
-            private Action<MySqlDataReader> m_func_reader;
-            private Action<MySqlParameterCollection> m_func_result;
-            private object m_object_next;
-            private Action<object> m_func_next;
+            private Action<MySqlDataReader>? m_func_reader;
+            private Action<MySqlParameterCollection>? m_func_result;
+            private object? m_object_next;
+            private Action<object?>? m_func_next;
         }
     }
 }

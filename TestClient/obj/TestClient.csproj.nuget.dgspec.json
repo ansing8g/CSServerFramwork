@@ -1,35 +1,37 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Work\\NPoker\\NPokerServer\\TestClient\\TestClient.csproj": {}
+    "C:\\Work\\NPoker\\ServerBase\\TestClient\\TestClient.csproj": {}
   },
   "projects": {
-    "C:\\Work\\NPoker\\NPokerServer\\ServerModule\\ServerModule.csproj": {
+    "C:\\Work\\NPoker\\ServerBase\\ServerModule\\ServerModule.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Work\\NPoker\\NPokerServer\\ServerModule\\ServerModule.csproj",
+        "projectUniqueName": "C:\\Work\\NPoker\\ServerBase\\ServerModule\\ServerModule.csproj",
         "projectName": "ServerModule",
-        "projectPath": "C:\\Work\\NPoker\\NPokerServer\\ServerModule\\ServerModule.csproj",
+        "projectPath": "C:\\Work\\NPoker\\ServerBase\\ServerModule\\ServerModule.csproj",
         "packagesPath": "C:\\Users\\SJENM\\.nuget\\packages\\",
-        "outputPath": "C:\\Work\\NPoker\\NPokerServer\\ServerModule\\obj\\",
+        "outputPath": "C:\\Work\\NPoker\\ServerBase\\ServerModule\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
           "C:\\Users\\SJENM\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net5.0"
+          "net6.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net5.0": {
-            "targetAlias": "net5.0",
+          "net6.0": {
+            "targetAlias": "net6.0",
             "projectReferences": {}
           }
         },
@@ -40,12 +42,16 @@
         }
       },
       "frameworks": {
-        "net5.0": {
-          "targetAlias": "net5.0",
+        "net6.0": {
+          "targetAlias": "net6.0",
           "dependencies": {
             "MySql.Data": {
               "target": "Package",
               "version": "[8.0.27, )"
+            },
+            "StackExchange.Redis": {
+              "target": "Package",
+              "version": "[2.2.88, )"
             }
           },
           "imports": [
@@ -63,39 +69,41 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Work\\NPoker\\NPokerServer\\TestClient\\TestClient.csproj": {
+    "C:\\Work\\NPoker\\ServerBase\\Shared\\Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Work\\NPoker\\NPokerServer\\TestClient\\TestClient.csproj",
-        "projectName": "TestClient",
-        "projectPath": "C:\\Work\\NPoker\\NPokerServer\\TestClient\\TestClient.csproj",
+        "projectUniqueName": "C:\\Work\\NPoker\\ServerBase\\Shared\\Shared.csproj",
+        "projectName": "Shared",
+        "projectPath": "C:\\Work\\NPoker\\ServerBase\\Shared\\Shared.csproj",
         "packagesPath": "C:\\Users\\SJENM\\.nuget\\packages\\",
-        "outputPath": "C:\\Work\\NPoker\\NPokerServer\\TestClient\\obj\\",
+        "outputPath": "C:\\Work\\NPoker\\ServerBase\\Shared\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
           "C:\\Users\\SJENM\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net5.0"
+          "net6.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net5.0": {
-            "targetAlias": "net5.0",
+          "net6.0": {
+            "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Work\\NPoker\\NPokerServer\\ServerModule\\ServerModule.csproj": {
-                "projectPath": "C:\\Work\\NPoker\\NPokerServer\\ServerModule\\ServerModule.csproj"
+              "C:\\Work\\NPoker\\ServerBase\\ServerModule\\ServerModule.csproj": {
+                "projectPath": "C:\\Work\\NPoker\\ServerBase\\ServerModule\\ServerModule.csproj"
               }
             }
           }
@@ -107,8 +115,74 @@
         }
       },
       "frameworks": {
-        "net5.0": {
-          "targetAlias": "net5.0",
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Work\\NPoker\\ServerBase\\TestClient\\TestClient.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Work\\NPoker\\ServerBase\\TestClient\\TestClient.csproj",
+        "projectName": "TestClient",
+        "projectPath": "C:\\Work\\NPoker\\ServerBase\\TestClient\\TestClient.csproj",
+        "packagesPath": "C:\\Users\\SJENM\\.nuget\\packages\\",
+        "outputPath": "C:\\Work\\NPoker\\ServerBase\\TestClient\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\SJENM\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Work\\NPoker\\ServerBase\\ServerModule\\ServerModule.csproj": {
+                "projectPath": "C:\\Work\\NPoker\\ServerBase\\ServerModule\\ServerModule.csproj"
+              },
+              "C:\\Work\\NPoker\\ServerBase\\Shared\\Shared.csproj": {
+                "projectPath": "C:\\Work\\NPoker\\ServerBase\\Shared\\Shared.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
           "dependencies": {
             "Newtonsoft.Json": {
               "target": "Package",
@@ -130,7 +204,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

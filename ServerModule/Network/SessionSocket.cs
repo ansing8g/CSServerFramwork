@@ -6,7 +6,7 @@ namespace ServerModule.Network
 {
     public class SessionSocket
     {
-        internal SessionSocket(Socket _socket, ServerSocketEvent _event, uint _bufsize, uint _total_bufsize)
+        internal SessionSocket(Socket? _socket, ServerSocketEvent _event, uint _bufsize, uint _total_bufsize)
         {
             m_sessionsocket = _socket;
             m_event = _event;
@@ -18,8 +18,11 @@ namespace ServerModule.Network
 
             StateObject = null;
 
-            m_sessionsocket.NoDelay = true;
-            m_sessionsocket.LingerState = new LingerOption(true, 0);
+            if (null == m_sessionsocket)
+            {
+                m_sessionsocket!.NoDelay = true;
+                m_sessionsocket!.LingerState = new LingerOption(true, 0);
+            }
         }
 
         public bool Connected()
@@ -76,10 +79,10 @@ namespace ServerModule.Network
                 byte[] total_data = BitConverter.GetBytes(data.Length).Concat(data).ToArray();
 
                 //SocketError error;
-                //int sendsize = m_sessionsocket.Send(total_data, 0, total_data.Length, SocketFlags.None, out error);
+                //int sendsize = m_sessionsocket!.Send(total_data, 0, total_data.Length, SocketFlags.None, out error);
 
                 SocketError error;
-                m_sessionsocket.BeginSend(total_data, 0, total_data.Length, SocketFlags.None, out error, SendCallback, this);
+                m_sessionsocket!.BeginSend(total_data, 0, total_data.Length, SocketFlags.None, out error, SendCallback, this);
 
                 if (SocketError.Success != error &&
                     SocketError.IOPending != error)
@@ -135,7 +138,7 @@ namespace ServerModule.Network
                 }
 
                 SocketError error;
-                m_sessionsocket.BeginReceive(m_buf, 0, m_buf.Length, SocketFlags.None, out error, ReceiveCallback, this);
+                m_sessionsocket!.BeginReceive(m_buf, 0, m_buf.Length, SocketFlags.None, out error, ReceiveCallback, this);
 
                 if (SocketError.Success != error &&
                     SocketError.IOPending != error)
@@ -162,7 +165,12 @@ namespace ServerModule.Network
 
             try
             {
-                recvsize = m_sessionsocket.EndReceive(ar);
+                if(false == Connected())
+                {
+                    return;
+                }
+
+                recvsize = m_sessionsocket!.EndReceive(ar);
 
                 if (0 >= recvsize)
                 {
@@ -234,7 +242,7 @@ namespace ServerModule.Network
             }
         }
 
-        private Socket m_sessionsocket;
+        private Socket? m_sessionsocket;
         private ServerSocketEvent m_event;
         private byte[] m_buf;
         private uint m_bufsize;
@@ -242,6 +250,6 @@ namespace ServerModule.Network
         private uint m_total_bufsize;
         private uint m_offset;
 
-        public object StateObject;
+        public object? StateObject;
     }
 }
