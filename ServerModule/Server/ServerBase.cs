@@ -254,6 +254,7 @@ namespace ServerModule.Server
             while(true)
             {
                 OnUpdate();
+                System.Threading.Thread.Sleep(1);
             }
         }
 
